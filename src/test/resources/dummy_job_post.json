@@ -1,0 +1,12 @@
+{
+  "jobTitle" : "SDE Intern",
+  "jobDescription" : "Engineer, design and develop applications.",
+  "company" : "ACME Inc.",
+  "location" : "Remote",
+  "skills" : [
+    "Java",
+    "C++",
+    "Python"
+  ],
+  "expiresAfter" : 5184000
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "id" : "5f78e009117f880cd737f154",
+    "jobTitle" : "SDE-I",
+    "jobDescription" : "Engineer, design and develop applications.",
+    "company" : "ACME Inc.",
+    "location" : "Remote",
+    "skills" : [
+      "Java",
+      "C++",
+      "Python"
+    ],
+    "datePosted" : "2020-10-03T18:30:00Z",
+    "expiresAfter" : 5184000
+  },
+  {
+    "id" : "5f78e043117f880cd737f155",
+    "jobTitle" : "SDE-II",
+    "jobDescription" : "Engineer, design and develop applications.",
+    "company" : "ACME Inc.",
+    "location" : "Remote",
+    "skills" : [
+      "JavaScript",
+      "TypeScript",
+      "Java"
+    ],
+    "datePosted" : "2020-10-03T18:30:00Z",
+    "expiresAfter" : 5184000
+  }
+]

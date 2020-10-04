@@ -16,7 +16,8 @@ public interface JobsService {
    * @param skills The skills required for the job.
    * @return The list of filtered jobs.
    */
-  GetJobsResponse getJobs(Optional<String> location, Optional<List<String>> skills);
+  GetJobsResponse getJobs(Optional<String> location, Optional<List<String>> skills)
+      throws Exception;
 
   /**
    * Post a new job.
@@ -25,5 +26,5 @@ public interface JobsService {
    * @param currentDate The date of posting of the job.
    * @return The operation status and job id if successful.
    */
-  PostJobsResponse addJob(PostJobsRequest postJobsRequest, LocalDate currentDate);
+  PostJobsResponse addJob(PostJobsRequest postJobsRequest, LocalDate currentDate) throws Exception;
 }

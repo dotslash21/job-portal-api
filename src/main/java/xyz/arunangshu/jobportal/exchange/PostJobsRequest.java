@@ -1,5 +1,9 @@
 package xyz.arunangshu.jobportal.exchange;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.DurationDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.DurationSerializer;
 import java.time.Duration;
 import java.util.List;
 import javax.validation.constraints.NotEmpty;
@@ -38,5 +42,7 @@ public class PostJobsRequest {
   @NotEmpty(message = "Skills must not be empty")
   private List<String> skills;
 
+  @JsonDeserialize(using = DurationDeserializer.class)
+  @JsonSerialize(using = DurationSerializer.class)
   private Duration expiresAfter = Duration.ofDays(60);
 }
