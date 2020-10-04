@@ -8,6 +8,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,7 +40,7 @@ public class JobsController {
    * @param skills   The skill requirements of the job.
    * @return The list of jobs.
    */
-  @GetMapping
+  @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
   @ApiOperation(value = "Get list of jobs.", response = GetJobsResponse.class)
   public ResponseEntity<GetJobsResponse> getJobs(
       @RequestParam(required = false) Optional<String> location,
@@ -62,7 +63,7 @@ public class JobsController {
    * @param postJobsRequest The job information.
    * @return The operation status and job id if successful.
    */
-  @PostMapping
+  @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
   @ApiOperation(value = "Post a job.", response = PostJobsResponse.class)
   public ResponseEntity<PostJobsResponse> addJob(
       @Valid @RequestBody PostJobsRequest postJobsRequest) {
