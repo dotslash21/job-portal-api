@@ -1,6 +1,4 @@
-package xyz.arunangshu.jobportal.config;
-
-import static springfox.documentation.builders.PathSelectors.regex;
+package xyz.arunangshu.jobportal.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +17,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfig extends WebMvcConfigurationSupport {
 
+  public static final String AUTH_TAG = "auth";
   public static final String JOBS_TAG = "jobs";
 
   /**

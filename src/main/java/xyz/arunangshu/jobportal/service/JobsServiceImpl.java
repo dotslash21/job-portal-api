@@ -3,6 +3,7 @@ package xyz.arunangshu.jobportal.service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.arunangshu.jobportal.dal.JobDAL;
@@ -13,6 +14,7 @@ import xyz.arunangshu.jobportal.model.JobEntity;
 import xyz.arunangshu.jobportal.repository.JobRepository;
 
 @Service
+@Log4j2
 public class JobsServiceImpl implements JobsService {
 
   @Autowired
@@ -29,6 +31,7 @@ public class JobsServiceImpl implements JobsService {
     try {
       jobEntities = jobDAL.filterJobs(location, skills);
     } catch (Exception e) {
+      log.error("Couldn't get the jobs list: {}", e.getMessage());
       throw new Exception("Error getting the job list");
     }
 
@@ -47,6 +50,7 @@ public class JobsServiceImpl implements JobsService {
     try {
       jobId = jobRepository.save(jobEntity).getId();
     } catch (Exception e) {
+      log.error("Couldn't post the job: {}", e.getMessage());
       throw new Exception("Error posting the job");
     }
 

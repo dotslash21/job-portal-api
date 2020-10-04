@@ -23,9 +23,14 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    // Log4j2
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version: '2.1.2.RELEASE'
 
     // Lombok
     compileOnly 'org.projectlombok:lombok'
@@ -34,6 +39,18 @@ dependencies {
     // Swagger 2
     compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+
+    // JJWT
+    compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+
+    // Jakarta
+    compile group: 'jakarta.xml.bind', name: 'jakarta.xml.bind-api', version: '2.3.2'
+}
+
+configurations {
+    all {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
 }
 
 test {

@@ -10,20 +10,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-import xyz.arunangshu.jobportal.config.SwaggerConfig;
+import xyz.arunangshu.jobportal.swagger.SwaggerConfig;
 import xyz.arunangshu.jobportal.exchange.GetJobsResponse;
 import xyz.arunangshu.jobportal.exchange.PostJobsRequest;
 import xyz.arunangshu.jobportal.exchange.PostJobsResponse;
 import xyz.arunangshu.jobportal.service.JobsService;
 
-@Controller
+@CrossOrigin(origins = "*", maxAge = 3600)
+@RestController
 @RequestMapping(JobsController.JOB_API_ENDPOINT)
 @Api(tags = {SwaggerConfig.JOBS_TAG})
 public class JobsController {
@@ -41,6 +44,7 @@ public class JobsController {
    * @return The list of jobs.
    */
   @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
+  @PreAuthorize("hasRole('USER') or hasRole('RECRUITER') or hasRole('ADMIN')")
   @ApiOperation(value = "Get list of jobs.", response = GetJobsResponse.class)
   public ResponseEntity<GetJobsResponse> getJobs(
       @RequestParam(required = false) Optional<String> location,
@@ -64,6 +68,7 @@ public class JobsController {
    * @return The operation status and job id if successful.
    */
   @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+  @PreAuthorize("hasRole('RECRUITER') or hasRole('ADMIN')")
   @ApiOperation(value = "Post a job.", response = PostJobsResponse.class)
   public ResponseEntity<PostJobsResponse> addJob(
       @Valid @RequestBody PostJobsRequest postJobsRequest) {
