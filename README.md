@@ -26,9 +26,13 @@ To run this project you'll need to ensure that the following software is install
 
 ## API Documentation
 
-I've used Swagger to generate API documentation. It's much more interactive and intuitive than any textual documentation.
+I've used Swagger to generate API documentation. It's much more interactive and intuitive than any
+textual documentation.
 
 To view the documentation, start the server and browse to `http://host:port/swagger-ui.html`.
+
+If for some reason you are not able to view the swagger documentation, you can view the markdown
+version [here](docs/api/README.md).
 
 ## Authors  
   
