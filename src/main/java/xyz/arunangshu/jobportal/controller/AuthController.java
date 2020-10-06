@@ -2,6 +2,8 @@ package xyz.arunangshu.jobportal.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import javax.validation.Valid;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,9 @@ public class AuthController {
   @PostMapping(value = "/signin", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {
       MediaType.APPLICATION_JSON_VALUE})
   @ApiOperation(value = "Sign In")
+  @ApiResponses(value = {
+      @ApiResponse(code = 200, message = "User authenticated", response = JwtResponse.class)
+  })
   public ResponseEntity<?> signIn(
       @Valid @RequestBody PostLoginRequest postLoginRequest) {
     try {
@@ -50,6 +55,9 @@ public class AuthController {
   @PostMapping(value = "/signup", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {
       MediaType.APPLICATION_JSON_VALUE})
   @ApiOperation(value = "Sign Up")
+  @ApiResponses(value = {
+      @ApiResponse(code = 200, message = "User sign up successful", response = StatusMessageResponse.class)
+  })
   public ResponseEntity<?> signUp(@Valid @RequestBody PostSignupRequest postSignupRequest) {
     try {
       StatusMessageResponse statusMessageResponse = authService.signUp(postSignupRequest);

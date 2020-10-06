@@ -22,6 +22,7 @@ import xyz.arunangshu.jobportal.dal.JobDAL;
 import xyz.arunangshu.jobportal.exchange.GetJobsResponse;
 import xyz.arunangshu.jobportal.exchange.PostJobsRequest;
 import xyz.arunangshu.jobportal.exchange.PostJobsResponse;
+import xyz.arunangshu.jobportal.exchange.StatusMessageResponse;
 import xyz.arunangshu.jobportal.model.JobEntity;
 import xyz.arunangshu.jobportal.repository.JobRepository;
 import xyz.arunangshu.jobportal.utils.FixtureHelpers;
@@ -71,7 +72,7 @@ class JobsServiceImplTest {
             postJobsRequest.getCompany(), postJobsRequest.getLocation(),
             postJobsRequest.getSkills(), date, postJobsRequest.getExpiresAfter()));
 
-    PostJobsResponse postJobsResponse = jobsService.addJob(postJobsRequest, date);
+    StatusMessageResponse statusMessageResponse = jobsService.addJob(postJobsRequest, date);
 
     // Check formed job entity to save is valid.
     JobEntity jobEntity = jobEntityArgumentCaptor.getValue();
@@ -83,5 +84,6 @@ class JobsServiceImplTest {
     assertEquals(jobEntity.getSkills(), postJobsRequest.getSkills());
     assertEquals(jobEntity.getExpiresAfter(), postJobsRequest.getExpiresAfter());
     assertEquals(jobEntity.getDatePosted(), date);
+    assertEquals(statusMessageResponse.getStatus(), "SUCCESS");
   }
 }

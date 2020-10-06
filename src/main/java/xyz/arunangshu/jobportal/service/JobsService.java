@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import xyz.arunangshu.jobportal.exchange.GetJobsResponse;
 import xyz.arunangshu.jobportal.exchange.PostJobsRequest;
-import xyz.arunangshu.jobportal.exchange.PostJobsResponse;
+import xyz.arunangshu.jobportal.exchange.StatusMessageResponse;
 
 public interface JobsService {
 
@@ -26,5 +26,5 @@ public interface JobsService {
    * @param currentDate The date of posting of the job.
    * @return The operation status and job id if successful.
    */
-  PostJobsResponse addJob(PostJobsRequest postJobsRequest, LocalDate currentDate) throws Exception;
+  StatusMessageResponse addJob(PostJobsRequest postJobsRequest, LocalDate currentDate) throws Exception;
 }

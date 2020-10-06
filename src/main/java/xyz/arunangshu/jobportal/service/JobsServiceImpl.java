@@ -10,6 +10,7 @@ import xyz.arunangshu.jobportal.dal.JobDAL;
 import xyz.arunangshu.jobportal.exchange.GetJobsResponse;
 import xyz.arunangshu.jobportal.exchange.PostJobsRequest;
 import xyz.arunangshu.jobportal.exchange.PostJobsResponse;
+import xyz.arunangshu.jobportal.exchange.StatusMessageResponse;
 import xyz.arunangshu.jobportal.model.JobEntity;
 import xyz.arunangshu.jobportal.repository.JobRepository;
 
@@ -39,21 +40,15 @@ public class JobsServiceImpl implements JobsService {
   }
 
   @Override
-  public PostJobsResponse addJob(PostJobsRequest postJobsRequest, LocalDate currentDate)
+  public StatusMessageResponse addJob(PostJobsRequest postJobsRequest, LocalDate currentDate)
       throws Exception {
     JobEntity jobEntity = new JobEntity(postJobsRequest.getJobTitle(),
         postJobsRequest.getJobDescription(), postJobsRequest.getCompany(),
         postJobsRequest.getLocation(), postJobsRequest.getSkills(),
         currentDate, postJobsRequest.getExpiresAfter());
 
-    String jobId;
-    try {
-      jobId = jobRepository.save(jobEntity).getId();
-    } catch (Exception e) {
-      log.error("Couldn't post the job: {}", e.getMessage());
-      throw new Exception("Error posting the job");
-    }
+    jobRepository.save(jobEntity);
 
-    return new PostJobsResponse(jobId);
+    return new StatusMessageResponse("SUCCESS", "Job created successfully!");
   }
 }
