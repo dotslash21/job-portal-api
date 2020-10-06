@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,6 +30,7 @@ import xyz.arunangshu.jobportal.swagger.SwaggerConfig;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping(JobsController.JOB_API_ENDPOINT)
+@Log4j2
 @Api(tags = {SwaggerConfig.JOBS_TAG})
 public class JobsController {
 
@@ -48,19 +50,18 @@ public class JobsController {
   @PreAuthorize("hasRole('USER') or hasRole('RECRUITER') or hasRole('ADMIN')")
   @ApiOperation(value = "Get list of jobs.", response = GetJobsResponse.class, authorizations = {
       @Authorization("Bearer Token")})
-  public ResponseEntity<GetJobsResponse> getJobs(
+  public ResponseEntity<?> getJobs(
       @RequestParam(required = false) Optional<String> location,
       @RequestParam(required = false) Optional<List<String>> skills) {
-    GetJobsResponse getJobsResponse;
     try {
-      getJobsResponse = jobsService
+      GetJobsResponse getJobsResponse = jobsService
           .getJobs(location, skills);
-    } catch (Exception e) {
-      throw new ResponseStatusException(
-          HttpStatus.INTERNAL_SERVER_ERROR, "Error getting the job list", e);
-    }
 
-    return ResponseEntity.ok().body(getJobsResponse);
+      return ResponseEntity.ok().body(getJobsResponse);
+    } catch (Exception e) {
+      log.error("Error getting the jobs list", e);
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
   }
 
   /**
@@ -76,16 +77,13 @@ public class JobsController {
       @Authorization("Bearer Token")})
   public ResponseEntity<PostJobsResponse> addJob(
       @Valid @RequestBody PostJobsRequest postJobsRequest) {
-    PostJobsResponse postJobsResponse;
     try {
-      postJobsResponse = jobsService.addJob(postJobsRequest, LocalDate.now());
-    } catch (Exception e) {
-      throw new ResponseStatusException(
-          HttpStatus.INTERNAL_SERVER_ERROR, "Error posting the job", e);
-    }
+      PostJobsResponse postJobsResponse = jobsService.addJob(postJobsRequest, LocalDate.now());
 
-    return ResponseEntity
-        .ok()
-        .body(postJobsResponse);
+      return ResponseEntity.ok().body(postJobsResponse);
+    } catch (Exception e) {
+      log.error("Error posting the job", e);
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
   }
 }
