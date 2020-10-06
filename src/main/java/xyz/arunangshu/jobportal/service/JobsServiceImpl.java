@@ -2,14 +2,12 @@ package xyz.arunangshu.jobportal.service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.arunangshu.jobportal.dal.JobDAL;
 import xyz.arunangshu.jobportal.exchange.GetJobsResponse;
 import xyz.arunangshu.jobportal.exchange.PostJobsRequest;
-import xyz.arunangshu.jobportal.exchange.PostJobsResponse;
 import xyz.arunangshu.jobportal.exchange.StatusMessageResponse;
 import xyz.arunangshu.jobportal.model.JobEntity;
 import xyz.arunangshu.jobportal.repository.JobRepository;
@@ -25,7 +23,7 @@ public class JobsServiceImpl implements JobsService {
   private JobDAL jobDAL;
 
   @Override
-  public GetJobsResponse getJobs(Optional<String> location, Optional<List<String>> skills)
+  public GetJobsResponse getJobs(String location, List<String> skills)
       throws Exception {
     List<JobEntity> jobEntities;
 
@@ -40,8 +38,7 @@ public class JobsServiceImpl implements JobsService {
   }
 
   @Override
-  public StatusMessageResponse addJob(PostJobsRequest postJobsRequest, LocalDate currentDate)
-      throws Exception {
+  public StatusMessageResponse addJob(PostJobsRequest postJobsRequest, LocalDate currentDate) {
     JobEntity jobEntity = new JobEntity(postJobsRequest.getJobTitle(),
         postJobsRequest.getJobDescription(), postJobsRequest.getCompany(),
         postJobsRequest.getLocation(), postJobsRequest.getSkills(),

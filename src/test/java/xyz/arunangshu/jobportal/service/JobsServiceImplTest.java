@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -21,7 +20,6 @@ import xyz.arunangshu.jobportal.JobPortalApplication;
 import xyz.arunangshu.jobportal.dal.JobDAL;
 import xyz.arunangshu.jobportal.exchange.GetJobsResponse;
 import xyz.arunangshu.jobportal.exchange.PostJobsRequest;
-import xyz.arunangshu.jobportal.exchange.PostJobsResponse;
 import xyz.arunangshu.jobportal.exchange.StatusMessageResponse;
 import xyz.arunangshu.jobportal.model.JobEntity;
 import xyz.arunangshu.jobportal.repository.JobRepository;
@@ -51,8 +49,8 @@ class JobsServiceImplTest {
         ArgumentMatchers.any()))
         .thenReturn(Arrays.asList(jobEntities));
 
-    GetJobsResponse getJobsResponse = jobsService.getJobs(Optional.of("Remote"), Optional.of(
-        Collections.singletonList("Java")));
+    GetJobsResponse getJobsResponse = jobsService
+        .getJobs("Remote", Collections.singletonList("Java"));
 
     // Assert return object matches expected values.
     assertEquals(getJobsResponse.getJobs().size(), 2);

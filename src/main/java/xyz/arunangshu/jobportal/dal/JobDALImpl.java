@@ -1,7 +1,6 @@
 package xyz.arunangshu.jobportal.dal;
 
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -16,10 +15,14 @@ public class JobDALImpl implements JobDAL {
   MongoTemplate mongoTemplate;
 
   @Override
-  public List<JobEntity> filterJobs(Optional<String> location, Optional<List<String>> skills) {
+  public List<JobEntity> filterJobs(String location, List<String> skills) {
     Query query = new Query();
-    location.ifPresent(s -> query.addCriteria(Criteria.where("location").is(s)));
-    skills.ifPresent(strings -> query.addCriteria(Criteria.where("skills").all(strings)));
+    if (location != null) {
+      query.addCriteria(Criteria.where("location").is(location));
+    }
+    if (skills != null) {
+      query.addCriteria(Criteria.where("skills").all(skills));
+    }
 
     return mongoTemplate.find(query, JobEntity.class);
   }

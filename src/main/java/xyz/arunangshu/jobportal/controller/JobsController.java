@@ -7,7 +7,6 @@ import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.Authorization;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import javax.validation.Valid;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,8 +55,8 @@ public class JobsController {
       @ApiResponse(code = 200, message = "Job list retrieval successful", response = GetJobsResponse.class)
   })
   public ResponseEntity<?> getJobs(
-      @RequestParam(required = false) Optional<String> location,
-      @RequestParam(required = false) Optional<List<String>> skills) {
+      @RequestParam(required = false) String location,
+      @RequestParam(required = false) List<String> skills) {
     try {
       GetJobsResponse getJobsResponse = jobsService
           .getJobs(location, skills);
