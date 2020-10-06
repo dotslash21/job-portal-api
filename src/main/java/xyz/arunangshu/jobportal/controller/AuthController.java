@@ -59,7 +59,7 @@ public class AuthController {
   @PostMapping(value = "/signin", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {
       MediaType.APPLICATION_JSON_VALUE})
   @ApiOperation(value = "Sign In")
-  public ResponseEntity<?> signin(
+  public ResponseEntity<?> signIn(
       @Valid @RequestBody PostLoginRequest postLoginRequest) {
     Authentication authentication = authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(postLoginRequest.getUsername(),
@@ -81,7 +81,7 @@ public class AuthController {
   @PostMapping(value = "/signup", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {
       MediaType.APPLICATION_JSON_VALUE})
   @ApiOperation(value = "Sign Up")
-  public ResponseEntity<?> signup(@Valid @RequestBody PostSignupRequest postSignupRequest) {
+  public ResponseEntity<?> signUp(@Valid @RequestBody PostSignupRequest postSignupRequest) {
     if (userRepository.existsByUsername(postSignupRequest.getUsername())) {
       return ResponseEntity.badRequest()
           .body(new StatusMessageResponse("FAILED", "Username is already taken!"));

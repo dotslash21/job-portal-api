@@ -2,6 +2,7 @@ package xyz.arunangshu.jobportal.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -19,11 +20,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-import xyz.arunangshu.jobportal.swagger.SwaggerConfig;
 import xyz.arunangshu.jobportal.exchange.GetJobsResponse;
 import xyz.arunangshu.jobportal.exchange.PostJobsRequest;
 import xyz.arunangshu.jobportal.exchange.PostJobsResponse;
 import xyz.arunangshu.jobportal.service.JobsService;
+import xyz.arunangshu.jobportal.swagger.SwaggerConfig;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -45,7 +46,8 @@ public class JobsController {
    */
   @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
   @PreAuthorize("hasRole('USER') or hasRole('RECRUITER') or hasRole('ADMIN')")
-  @ApiOperation(value = "Get list of jobs.", response = GetJobsResponse.class)
+  @ApiOperation(value = "Get list of jobs.", response = GetJobsResponse.class, authorizations = {
+      @Authorization("Bearer Token")})
   public ResponseEntity<GetJobsResponse> getJobs(
       @RequestParam(required = false) Optional<String> location,
       @RequestParam(required = false) Optional<List<String>> skills) {
@@ -67,9 +69,11 @@ public class JobsController {
    * @param postJobsRequest The job information.
    * @return The operation status and job id if successful.
    */
-  @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+  @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {
+      MediaType.APPLICATION_JSON_VALUE})
   @PreAuthorize("hasRole('RECRUITER') or hasRole('ADMIN')")
-  @ApiOperation(value = "Post a job.", response = PostJobsResponse.class)
+  @ApiOperation(value = "Post a job.", response = PostJobsResponse.class, authorizations = {
+      @Authorization("Bearer Token")})
   public ResponseEntity<PostJobsResponse> addJob(
       @Valid @RequestBody PostJobsRequest postJobsRequest) {
     PostJobsResponse postJobsResponse;
